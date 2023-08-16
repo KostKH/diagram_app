@@ -1,0 +1,67 @@
+{% extends "base.html" %}
+{% block content %}
+  <main>
+    <section class="mb-3 text-left container-fluid bg-warning">
+      <div class="row py-3">
+
+          <h1 class="fw-light">
+            План-факт по городам
+          </h1>
+      </div>
+    </section>
+    <section class="mb-3 text-left container-fluid">
+        <div class="row py-3">
+            <h2 class="fw-light">
+              Фильтр:
+            </h2>
+            <form method="post">
+              {{ form.as_p }}
+              {% csrf_token %}
+              <input type="submit" value="Подтвердить">
+            </form>
+        </div>
+    </section>
+    <section class="container-fluid">
+      <div class="row mb-2">
+        {% for  city in cities %}
+          <div class="col-lg-6">
+            <div class="ibox ">
+                <div class="ibox-title">
+                    <h5>{{ city }}</h5>
+                </div>
+                <div class="ibox-content">
+                    <div>
+                      <div class="chartjs-size-monitor">
+                        <div class="chartjs-size-monitor-expand">
+                          <div class="">
+
+                          </div>
+                        </div>
+                        <div class="chartjs-size-monitor-shrink">
+                            <div class="">
+
+                            </div>
+                          </div>
+                        </div>
+                        <canvas id="{{ city }}" 
+                         height="346"
+                         style="display: block; height: 277px; width: 595px;"
+                         width="743"
+                         class="chartjs-render-monitor"
+                        >
+                        </canvas>
+                    </div>
+                </div>
+            </div>
+          </div>
+        {% endfor %}
+      </div>
+    </section>
+  </main>
+  <div style="display:none">
+    <script id="plan_fact_data" type="application/json">
+      {{ plan_fact | safe }}
+    </script>
+  </div>
+  
+{% endblock %}
